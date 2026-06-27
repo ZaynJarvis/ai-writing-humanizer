@@ -1,160 +1,138 @@
 # AI Writing Unhumanizer
 
-Remove mechanical AI flavor from English and Chinese prose while preserving facts, register, and structure.
+Remove mechanical AI flavor from English and Chinese prose. Preserve facts, register, and structure.
 
 ## When to use
 
-Use this skill when you have a draft that feels flat, robotic, over-structured, or obviously AI-generated. It works for blog posts, essays, emails, product copy, newsletters, and academic prose. Do not use it to cheat detectors or fabricate evidence.
+For drafts that feel flat, robotic, or obviously AI-generated: blog posts, essays, emails, product copy, newsletters, academic prose. Do not use to cheat detectors or fabricate evidence.
 
-## How it works
+## Workflow
 
-A three-pass workflow:
-
-1. **Diagnose** — scan the text for AI tells and score it.
-2. **Subtract** — remove mechanical patterns without adding new ideas.
+1. **Diagnose** — score the text against the 27 AI tells below.
+2. **Subtract** — remove mechanical patterns without adding ideas.
 3. **Add** — restore rhythm, specificity, and a human register.
 
 ## Invocation
 
 ```text
-/unhumanize <file-or-paste> [--lang en|zh] [--tone <name>] [--audit-only]
+/unhumanize <file-or-paste> [--lang en|zh] [--tone conversational|academic|business|story|social|minimal] [--audit-only]
 ```
 
-## Parameters
+- `--lang`: default `auto`; override with `en` or `zh`.
+- `--tone`: default `preserve` (keep original register).
+- `--audit-only`: diagnosis only, no rewrite.
 
-- `--lang`: default is `auto` (detect from script). Override with `en` or `zh`.
-- `--tone`: optional. Choose from `conversational`, `academic`, `business`, `story`, `social`, `minimal`. Default is `preserve` (keep the original register).
-- `--audit-only`: return only the diagnosis and score, no rewrite.
+## Guardrails
 
-## Guardrails (non-negotiable)
-
-1. **Do not invent facts.** No new examples, quotes, statistics, sources, or people.
-2. **Do not change meaning.** If a sentence is technically correct but awkward, rewrite it; do not alter its claim.
-3. **Preserve the register.** Business email stays business email. Academic abstract stays academic abstract. Never make a paper sound like a tweet unless asked.
-4. **Preserve structure when asked.** Only reorganize if the text is clearly broken or the user asks for it.
-5. **Keep proper nouns, terminology, and data intact.** Fix casing only if it is genuinely wrong.
-6. **When uncertain, leave it alone.** False positives are better than false repairs.
+1. Do not invent facts, examples, quotes, statistics, or sources.
+2. Do not change meaning. Rewrite awkward but correct sentences; do not alter claims.
+3. Preserve register. Business stays business; academic stays academic.
+4. Keep structure unless it is broken or the user asks.
+5. Keep proper nouns, terminology, and data intact.
+6. When uncertain, leave it alone.
 
 ## Output format
 
-Return exactly this structure:
-
 ```markdown
 ## Diagnosis
-- **Overall AI-tell score:** X/27 (0 = human-like, 27 = heavily AI-flavored)
-- **Top 3 patterns detected:** ...
-- **Register:** ...
-- **Risk notes:** ...
+- Score: X/27 (0 = human-like, 27 = heavily AI-flavored)
+- Top 3 tells: ...
+- Register: ...
+- Risks: ...
 
-## Subtractions (what was removed)
+## Subtractions
 1. ...
-2. ...
 
-## Additions (what was restored)
+## Additions
 1. ...
-2. ...
 
 ## Rewritten text
-<full rewritten text here>
+...
 
 ## Final audit
-- Score before: X/27
-- Score after: Y/27
-- Still humanizeable issues: ...
+- Before: X/27 | After: Y/27 | Remaining: ...
 ```
 
-## 27 AI tells (English + Chinese)
+## 27 AI tells
 
-Score 1 point per category present. If the text is borderline, score 0.5.
+Score 1 per present tell (0.5 if borderline). Full definitions and fixes are in `patterns/ai-tells-en.md` and `patterns/ai-tells-zh.md`.
 
-### Structural tells
+### Structural (1–5)
+1. Paragraph symmetry
+2. List addiction
+3. Transition formula
+4. Section bloat
+5. Hook-template fatigue
 
-1. **Paragraph symmetry** — every paragraph is the same length or starts with the same pattern.
-2. **List addiction** — everything is flattened into numbered or bulleted lists.
-3. **Transition formula** — overuse of "firstly/secondly/finally", "in conclusion", "moreover", "furthermore".
-4. **Section bloat** — every section has an explicit topic sentence, three supporting points, and a summary sentence.
-5. **Hook-template fatigue** — starts with a broad question, definition, or "In today's world...".
+### Lexical (6–10)
+6. AI buzzwords
+7. Hedge overload
+8. Empty intensifiers
+9. Sycophantic polish
+10. Faux-certainty endings
 
-### Lexical tells
+### Syntactic (11–15)
+11. Copula avoidance
+12. Parallelism excess
+13. Tricolon addiction
+14. Long appositive chains
+15. Passive voice default
 
-6. **AI buzzwords** — "leverage", "delve", "tapestry", "landscape", "journey", "robust", "seamless", "multifaceted".
-7. **Hedge overload** — "it is important to note", "it should be considered", "arguably" repeated.
-8. **Empty intensifiers** — "very", "extremely", "highly", "significantly" without concrete backing.
-9. **Sycophantic polish** — "I hope this helps", "I'm excited to", "feel free to" in contexts where a human would be more direct.
-10. **Faux-certainty endings** — "In summary, X is a powerful tool that will transform Y".
+### Punctuation / formatting (16–19)
+16. Em dash overuse
+17. Bold overuse
+18. Quote-hallucination block
+19. Uniform sentence length
 
-### Syntactic tells
+### Voice / register (20–25)
+20. No stance
+21. Reader-moralizing
+22. Emotion-by-label
+23. Generic you
+24. Knowledge-cutoff disclaimer
+25. Over-explaining
 
-11. **Copula avoidance** — every sentence avoids "is/are" by using "represents", "constitutes", "serves as".
-12. **Parallelism excess** — "not only X but also Y", "either X or Y", "both X and Y" in every other sentence.
-13. **Tricolon addiction** — "X, Y, and Z" triplets everywhere.
-14. **Long appositive chains** — "a leading, innovative, and comprehensive solution".
-15. **Passive voice default** — passive constructions used when active would be clearer.
+### Chinese-specific (26–27)
+26. Translationese / 翻译腔
+27. Four-character slogan endings / 口号式结尾
 
-### Punctuation / formatting tells
-
-16. **Em dash overuse** — em dashes used as a stylistic crutch.
-17. **Bold overuse** — bolding every other phrase.
-18. **Quote-hallucination block** — a standalone inspirational quote that no one asked for.
-19. **Uniform sentence length** — all sentences are 15–25 words.
-
-### Voice / register tells
-
-20. **No stance** — the text reads like a committee summary; no opinion, no friction, no point of view.
-21. **Reader-moralizing** — "remember", "always", "never" used to lecture the reader.
-22. **Emotion-by-label** — saying something is "exciting" or "shocking" instead of showing it.
-23. **Generic you** — "you may find that..." directed at an abstract reader.
-24. **Knowledge-cutoff disclaimer** — "as of my last update" or similar meta-AI references.
-25. **Over-explaining** — defining obvious terms or stating intent the reader can already infer.
-
-### Chinese-specific tells
-
-26. **Translationese** — 直译腔，如 "这是一个 X 的问题", "在...的背景下", "我们需要做的是"; 硬套英文从句结构；滥用 "的"、"了"、"着"。
-27. **Four-character slogan endings** — 段末硬上「让我们...，共创...，开启...」或「这不仅...，更是...」口号。
-
-## Language-specific rules
+## Language rules
 
 ### English
-
-- Prefer concrete verbs over nominalizations.
-- Vary sentence length; allow occasional short sentences and fragments.
-- Use contractions when the register allows it.
-- Replace "utilize" with "use", "leverage" with "use", "delve" with "look into" or "dig into".
-- Remove "In this article, we will..." unless it is a genuine roadmap.
+- Use concrete verbs; kill nominalizations.
+- Vary sentence length; allow fragments in casual text.
+- Replace "utilize", "leverage", "delve" with "use", "use", "look into".
+- Drop "In this article, we will..." unless it is a real roadmap.
 
 ### Chinese
-
-- 先断句，再调语序。把长定语从句拆成短句。
-- 能用逗号就不用顿号；能用句号就不用分号。
-- 删掉「进行」「做出」「展开」等空动词，换成具体动词。
-- 控制「的」字密度；连续多个「的」必须拆分。
-- 口语化连接词（「其实」「不过」「说白了」）可适度使用，但要匹配文体。
-- 段末不要强行升华，允许开放式收尾。
+- 长句先断，再调语序；拆长定语从句。
+- 能用逗号不用顿号，能用句号不用分号。
+- 删掉「进行」「做出」「展开」等空动词。
+- 控制「的」密度；连续多个「的」必拆分。
+- 段末不强行升华，允许开放式收尾。
 
 ## Tone modes
 
-- `conversational`: shorter sentences, contractions, direct address, minor asides.
-- `academic`: keep citations, keep precision, remove buzzwords and hedges, favor active voice where possible.
-- `business`: clear action, no fluff, keep politeness but kill sycophancy.
-- `story`: scene, sensory detail, rhythm, opinion, one human point of view.
-- `social`: punchy, platform-aware (Xiaohongshu, Bilibili, WeChat), emoji optional, kill slogans.
-- `minimal`: only remove tells; do not inject voice.
+| Mode | Direction |
+|---|---|
+| `conversational` | shorter sentences, contractions, direct address |
+| `academic` | keep citations/precision, remove buzzwords/hedges |
+| `business` | clear action, no fluff, kill sycophancy |
+| `story` | scene, sensory detail, rhythm, point of view |
+| `social` | punchy, platform-aware, kill slogans |
+| `minimal` | only remove tells; do not inject voice |
 
 ## Advanced options
 
-- `--deep`: after the rewrite, run a second pass with the host model's own critique.
-- `--voice <file.md>`: adopt a writer-voice profile from a markdown file (examples: 李笑来, 王小波, Orwell, Didion). Only applies if the user explicitly asks.
-- `--seed`: if the user wants a benchmark, provide the same seed text and run it through the diagnosis before and after.
+- `--deep`: second critique pass after rewrite.
+- `--voice <file.md>`: adopt a writer-voice profile only if explicitly asked.
+- `--seed`: benchmark the same text before and after.
 
-## Self-check before returning
+## Self-check
 
-Before outputting the final rewrite, ask:
-
-1. Did I remove at least the top 3 detected tells?
+1. Did I remove the top 3 detected tells?
 2. Did I invent any facts, examples, or quotes?
-3. Did I change the core meaning?
-4. Is the register still appropriate?
-5. Does the rewritten text still sound like the same author, just less mechanical?
-6. If this is Chinese, do the sentences read like a native speaker wrote them?
+3. Is the register still appropriate?
+4. Does it sound like the same author, just less mechanical?
 
-If any answer is wrong, fix it before returning.
+Fix any "no" before returning.
