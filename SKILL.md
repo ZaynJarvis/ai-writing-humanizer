@@ -1,3 +1,8 @@
+---
+name: ai-writing-unhumanizer
+description: Remove mechanical AI flavor from English and Chinese prose while preserving facts, register, and structure. Use when a draft (blog post, essay, email, product copy, newsletter, academic prose) feels flat, robotic, or obviously AI-generated, or when asked to "unhumanize" / 去 AI 味 / 降低 AI 痕迹. Not for defeating AI detectors or fabricating evidence.
+---
+
 # AI Writing Unhumanizer
 
 Remove mechanical AI flavor from English and Chinese prose. Preserve facts, register, and structure.
