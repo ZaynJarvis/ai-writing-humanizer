@@ -1,9 +1,9 @@
 ---
-name: ai-writing-unhumanizer
-description: Remove mechanical AI flavor from English and Chinese prose while preserving facts, register, and structure. Use when a draft (blog post, essay, email, product copy, newsletter, academic prose) feels flat, robotic, or obviously AI-generated, or when asked to "unhumanize" / 去 AI 味 / 降低 AI 痕迹. Not for defeating AI detectors or fabricating evidence.
+name: ai-writing-humanizer
+description: Remove mechanical AI flavor from English and Chinese prose while preserving facts, register, and structure. Use when a draft (blog post, essay, email, product copy, newsletter, academic prose) feels flat, robotic, or obviously AI-generated, or when asked to "humanize" / 去 AI 味 / 降低 AI 痕迹. Not for defeating AI detectors or fabricating evidence.
 ---
 
-# AI Writing Unhumanizer
+# AI Writing Humanizer
 
 Remove mechanical AI flavor from English and Chinese prose. Preserve facts, register, and structure.
 
@@ -20,7 +20,7 @@ For drafts that feel flat, robotic, or obviously AI-generated: blog posts, essay
 ## Invocation
 
 ```text
-/unhumanize <file-or-paste> [--lang en|zh] [--tone conversational|academic|business|story|social|minimal] [--audit-only]
+/humanize <file-or-paste> [--lang en|zh] [--tone conversational|academic|business|story|social|minimal] [--audit-only]
 ```
 
 - `--lang`: default `auto`; override with `en` or `zh`.
@@ -34,7 +34,7 @@ For drafts that feel flat, robotic, or obviously AI-generated: blog posts, essay
 3. Preserve register. Business stays business; academic stays academic.
 4. Keep structure unless it is broken or the user asks.
 5. Keep proper nouns, terminology, and data intact.
-6. When uncertain, leave it alone.
+6. When uncertain, leave it alone. False positives are better than false repairs.
 
 ## Output format
 
@@ -114,6 +114,7 @@ Score 1 per present tell (0.5 if borderline). Full definitions and fixes are in 
 - 能用逗号不用顿号，能用句号不用分号。
 - 删掉「进行」「做出」「展开」等空动词。
 - 控制「的」密度；连续多个「的」必拆分。
+- 口语化连接词（「其实」「不过」「说白了」）可适度使用，但要匹配文体。
 - 段末不强行升华，允许开放式收尾。
 
 ## Tone modes
@@ -124,20 +125,22 @@ Score 1 per present tell (0.5 if borderline). Full definitions and fixes are in 
 | `academic` | keep citations/precision, remove buzzwords/hedges |
 | `business` | clear action, no fluff, kill sycophancy |
 | `story` | scene, sensory detail, rhythm, point of view |
-| `social` | punchy, platform-aware, kill slogans |
+| `social` | punchy, platform-aware (小红书 / B站 / 公众号), emoji optional, kill slogans |
 | `minimal` | only remove tells; do not inject voice |
 
 ## Advanced options
 
 - `--deep`: second critique pass after rewrite.
-- `--voice <file.md>`: adopt a writer-voice profile only if explicitly asked.
+- `--voice <file.md>`: adopt a writer-voice profile (e.g. 李笑来、王小波、Orwell、Didion) only if explicitly asked.
 - `--seed`: benchmark the same text before and after.
 
 ## Self-check
 
 1. Did I remove the top 3 detected tells?
 2. Did I invent any facts, examples, or quotes?
-3. Is the register still appropriate?
-4. Does it sound like the same author, just less mechanical?
+3. Did I change the core meaning?
+4. Is the register still appropriate?
+5. Does it sound like the same author, just less mechanical?
+6. If this is Chinese, do the sentences read like a native speaker wrote them?
 
 Fix any "no" before returning.

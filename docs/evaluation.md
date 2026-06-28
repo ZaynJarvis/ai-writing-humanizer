@@ -171,7 +171,7 @@ These repositories are not recommended for serious work. They contain no executa
 
 ## How this repo synthesizes them
 
-This repository (`ai-writing-unhumanizer`) merges the best ideas from the tier-1 and tier-2 resources:
+This repository (`ai-writing-humanizer`) merges the best ideas from the tier-1 and tier-2 resources:
 
 - The **workflow** from `blader/humanizer` and `harshaneel/humanize` (diagnose → subtract → add → audit).
 - The **Chinese-specific rules** from `qu-ai-wei` and `ai-zixun/humanizer-zh` (translationese, slogan endings, punctuation, typography).

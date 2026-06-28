@@ -1,4 +1,4 @@
-# AI Writing Unhumanizer
+# AI Writing Humanizer
 
 A curated, research-aware toolkit that helps you improve AI-assisted writing and remove the tell-tale "AI flavor" from prose.
 
@@ -17,15 +17,15 @@ It is not a detector-bypass tool. It is a quality tool: it surfaces the mechanic
 ### As a Claude Code / Codex / OpenClaw skill
 
 ```bash
-npx skills add <your-github-username>/ai-writing-unhumanizer
+npx skills add <your-github-username>/ai-writing-humanizer
 # or clone it manually
-git clone https://github.com/<your-github-username>/ai-writing-unhumanizer.git ~/.claude/skills/ai-writing-unhumanizer
+git clone https://github.com/<your-github-username>/ai-writing-humanizer.git ~/.claude/skills/ai-writing-humanizer
 ```
 
 Then in your agent:
 
 ```text
-/unhumanize ./draft.md --tone conversational --audit
+/humanize ./draft.md --tone conversational --audit
 ```
 
 ### As a standalone prompt

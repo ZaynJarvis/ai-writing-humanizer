@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-REPO_NAME="ai-writing-unhumanizer"
+REPO_NAME="ai-writing-humanizer"
 SKILL_SRC="$(cd "$(dirname "$0")" && pwd)"
 
 # Supported agent directories
@@ -38,4 +38,4 @@ if [ -d "${CURSOR_RULES}" ]; then
   echo "  -> ${CURSOR_RULES}/rules.md"
 fi
 
-echo "Done. Use /unhumanize in your agent, or copy SKILL.md into any LLM system prompt."
+echo "Done. Use /humanize in your agent, or copy SKILL.md into any LLM system prompt."
